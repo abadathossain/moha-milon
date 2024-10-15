@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../Providers/AuthProvider";
 
 const Login = () => {
-const {signIn}=useContext(AuthContext)
+const {signInUser}=useContext(AuthContext)
 
     const handleLogin=(e)=>{
         e.preventDefault()
@@ -13,7 +13,7 @@ const {signIn}=useContext(AuthContext)
         console.log(email,password)
         
         // signIn by firebase
-        signIn(email,password)
+        signInUser(email,password)
         .then(result=>{
             const loggedUser=result.user;
             console.log(loggedUser)

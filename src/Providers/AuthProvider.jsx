@@ -1,23 +1,38 @@
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
-import { createContext, useState } from "react"
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { createContext, useEffect, useState } from "react"
 import auth from "../firebase/firebase.config";
 
 export const AuthContext = createContext(null)
 
 export default function AuthProvider({ children }) {
-    const [user, setUser]=useState(null);
+    const [user, setUser] = useState(null);
 
-    const createUser=(email,password)=>{
-        return createUserWithEmailAndPassword(auth,email,password)
-        
+    const createUser = (email, password) => {
+        return createUserWithEmailAndPassword(auth, email, password)
     }
 
-    const signIn=(email,password)=>{
+    const signInUser = (email, password) => {
         return signInWithEmailAndPassword(auth, email, password)
     }
-const authInfo={
-    user,createUser,signIn
-}
+
+    const logOut=()=>{
+        return signOut(auth)
+    }
+  
+
+    useEffect(()=>{
+        const unsubscribe= onAuthStateChanged(auth,(currentUser)=>{
+            console.log('auth state change')
+            setUser(currentUser)
+        })
+        return ()=>{
+            unsubscribe()
+        }
+    },[])
+
+    const authInfo = {
+        user, createUser, signInUser, logOut
+    }
 
 
     return (
