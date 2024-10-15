@@ -1,15 +1,26 @@
 
+import { useContext } from "react";
 import { Link } from "react-router-dom";
-
-
+import { AuthContext } from "../Providers/AuthProvider";
 
 const Login = () => {
+const {signIn}=useContext(AuthContext)
 
     const handleLogin=(e)=>{
         e.preventDefault()
         const email=e.target.email.value;
         const password=e.target.password.value;
         console.log(email,password)
+        
+        // signIn by firebase
+        signIn(email,password)
+        .then(result=>{
+            const loggedUser=result.user;
+            console.log(loggedUser)
+        })
+        .catch(error=>{
+            console.log(error.message)
+        })
     }
 
 
