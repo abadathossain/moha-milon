@@ -1,26 +1,30 @@
 
 import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Providers/AuthProvider";
 
 const Login = () => {
-const {signInUser}=useContext(AuthContext)
+    const { signInUser } = useContext(AuthContext)
+    const navigate = useNavigate()
 
-    const handleLogin=(e)=>{
+    const handleLogin = (e) => {
         e.preventDefault()
-        const email=e.target.email.value;
-        const password=e.target.password.value;
-        console.log(email,password)
-        
+        const email = e.target.email.value;
+        const password = e.target.password.value;
+        console.log(email, password)
+
         // signIn by firebase
-        signInUser(email,password)
-        .then(result=>{
-            const loggedUser=result.user;
-            console.log(loggedUser)
-        })
-        .catch(error=>{
-            console.log(error.message)
-        })
+        signInUser(email, password)
+            .then(result => {
+                const loggedUser = result.user;
+                console.log(loggedUser)
+                e.target.reset()
+                navigate('/')
+
+            })
+            .catch(error => {
+                console.log(error.message)
+            })
     }
 
 

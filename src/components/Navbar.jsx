@@ -6,15 +6,15 @@ import { AuthContext } from "../Providers/AuthProvider";
 
 
 const Navbar = () => {
-    const {user, logOut}=useContext(AuthContext)
-    const handleSignOut=()=>{
+    const { user, logOut } = useContext(AuthContext)
+    const handleSignOut = () => {
         logOut()
-        .then(()=>{
-            console.log('Logout successfully')
-        })
-        .catch(error=>{
-            console.log(error)
-        })
+            .then(() => {
+                console.log('Logout successfully')
+            })
+            .catch(error => {
+                console.log(error)
+            })
     }
 
     const navLinks = <>
@@ -22,10 +22,10 @@ const Navbar = () => {
         <li><NavLink to="/login">Login</NavLink></li>
         <li><NavLink to="/register">Register</NavLink></li>
         <li><NavLink to="/orders">Orders</NavLink></li>
-        {/* { user && <>
+        {user && <>
             <li><NavLink to="/profile">Profile</NavLink></li>
             <li><NavLink to="/dashboard">Dashboard</NavLink></li>
-        </>} */}
+        </>}
     </>
 
     return (
@@ -49,12 +49,12 @@ const Navbar = () => {
             <div className="navbar-end">
                 {
                     user ? <>
-                    <span>{user.email}</span>
-                    <a onClick={handleSignOut} className="btn btn-sm">Sign Out</a>
-                    </>:
-                    <Link to='/login'>Login</Link>
+                        <span>{user.email}</span>
+                        <a onClick={handleSignOut} className="btn btn-sm">Sign Out</a>
+                    </> :
+                        <Link to='/login'>Login</Link>
                 }
-                
+
             </div>
         </div>
     );
